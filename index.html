@@ -218,9 +218,51 @@
                 flex-direction: column !important; 
              }
         }
+        
+        /* Стили для регулятора громкости */
+        #volume-control {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            padding: 10px 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none; /* По умолчанию скрыт и неактивен */
+            opacity: 0;
+        }
+        #volume-indicator {
+            width: 100%;
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
+        #volume-level {
+            height: 100%;
+            background-color: #06b6d4;
+            border-radius: 3px;
+            transition: width 0.1s ease-out;
+        }
+        
     </style>
 </head>
 <body class="flex items-center justify-center p-4 no-select fixed-body" id="main-body">
+
+    <!-- Регулятор Громкости (Скрыт до начала фоновой музыки) -->
+    <div id="volume-control" class="flex flex-col items-center">
+        <div class="text-xs text-gray-600 mb-1 flex items-center">
+            <i data-lucide="volume-2" class="w-4 h-4 mr-1"></i>
+            Громкость: <span id="volume-percent">40%</span>
+        </div>
+        <div id="volume-indicator">
+            <div id="volume-level" style="width: 40%;"></div>
+        </div>
+        <p class="text-xs text-gray-400 mt-2">↑/↓ для управления</p>
+    </div>
 
     <div id="cat-intro-screen" class="fixed inset-0 flex flex-col items-center justify-center z-50 bg-e0f7fa transition-opacity duration-1000 opacity-100 pointer-events-auto">
         <div id="cat-intro-visuals" class="mb-8 flex flex-col items-center relative">
@@ -386,56 +428,56 @@
 
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-4">
                 
-                <div class="photo-album-card" style="--rotation: -5deg;" data-link="https://i.ibb.co/68v8z7y/tur.jpg">
+                <div class="photo-album-card" style="--rotation: -5deg;" data-link="pic/tur.jpg">
                     <!-- Турция (tur.jpg) -->
                     <img src="pic/tur.jpg" alt="Турция! (октябрь)" class="album-image">
                     <p class="text-sm mt-3 text-gray-600 font-semibold font-auktyonz">Турция!</p> 
                     <p class="text-xs text-gray-400 font-auktyonz">октябрь</p>
                 </div>
 
-                <div class="photo-album-card" style="--rotation: 8deg;" data-link="https://i.ibb.co/9qD7y03/kaif.jpg">
+                <div class="photo-album-card" style="--rotation: 8deg;" data-link="pic/kaif.jpg">
                     <!-- Тот самый кайф (kaif.jpg) -->
                     <img src="pic/kaif.jpg" alt="Тот самый кайф (сентябрь)" class="album-image">
                     <p class="text-sm mt-3 text-gray-600 font-semibold font-auktyonz">Тот самый кайф</p>
                     <p class="text-xs text-gray-400 font-auktyonz">сентябрь</p>
                 </div>
 
-                <div class="photo-album-card" style="--rotation: -2deg;" data-link="https://i.ibb.co/y4p823x/spg.jpg">
+                <div class="photo-album-card" style="--rotation: -2deg;" data-link="pic/spg.jpg">
                     <!-- Санкт-Петербург (spg.jpg) -->
                     <img src="pic/spg.jpg" alt="Санкт-Петербург (август)" class="album-image">
                     <p class="text-sm mt-3 text-gray-600 font-semibold font-auktyonz">Санкт-Петербург</p>
                     <p class="text-xs text-gray-400 font-auktyonz">август</p>
                 </div>
 
-                <div class="photo-album-card" style="--rotation: 12deg;" data-link="https://i.ibb.co/q21zK5z/attestat.jpg">
+                <div class="photo-album-card" style="--rotation: 12deg;" data-link="pic/attestat.jpg">
                     <!-- Успешная сдача (attestat.jpg) -->
                     <img src="pic/attestat.jpg" alt="Успешная сдача (Июль)" class="album-image">
                     <p class="text-sm mt-3 text-gray-600 font-semibold font-auktyonz">Успешная сдача</p>
                     <p class="text-xs text-gray-400 font-auktyonz">Июль</p>
                 </div>
                 
-                <div class="photo-album-card" style="--rotation: 5deg;" data-link="https://i.ibb.co/3s8p84X/ola.jpg">
+                <div class="photo-album-card" style="--rotation: 5deg;" data-link="pic/ola.jpg">
                     <!-- Йошкар-Ола (ola.jpg) -->
                     <img src="pic/ola.jpg" alt="Йошкар-Ола (март)" class="album-image">
                     <p class="text-sm mt-3 text-gray-600 font-semibold font-auktyonz">Йошкар-Ола</p>
                     <p class="text-xs text-gray-400 font-auktyonz">март</p>
                 </div>
 
-                <div class="photo-album-card" style="--rotation: -10deg;" data-link="https://i.ibb.co/q1z6J3y/fr.jpg">
+                <div class="photo-album-card" style="--rotation: -10deg;" data-link="pic/fr.jpg">
                     <!-- С друзьями (fr.jpg) -->
                     <img src="pic/fr.jpg" alt="С друзьями (октябрь)" class="album-image">
                     <p class="text-sm mt-3 text-gray-600 font-semibold font-auktyonz">С друзьями</p>
                     <p class="text-xs text-gray-400 font-auktyonz">октябрь</p>
                 </div>
 
-                <div class="photo-album-card" style="--rotation: 0deg;" data-link="https://i.ibb.co/v4b2y0J/hot.jpg">
+                <div class="photo-album-card" style="--rotation: 0deg;" data-link="pic/hot.jpg">
                     <!-- Момент тепла (hot.jpg) -->
                     <img src="pic/hot.jpg" alt="Момент тепла (август)" class="album-image">
                     <p class="text-sm mt-3 text-gray-600 font-semibold font-auktyonz">Момент тепла</p>
                     <p class="text-xs text-gray-400 font-auktyonz">август</p>
                 </div>
                 
-                <div class="photo-album-card" style="--rotation: 7deg;" data-link="https://i.ibb.co/fQ2h1h9/book.jpg">
+                <div class="photo-album-card" style="--rotation: 7deg;" data-link="pic/book.jpg">
                     <!-- Читай! Учись! (book.jpg) -->
                     <img src="pic/book.jpg" alt="Читай! Учись! (Июль)" class="album-image">
                     <p class="text-sm mt-3 text-gray-600 font-semibold font-auktyonz">Читай! Учись!</p>
@@ -450,7 +492,7 @@
     </div>
 
     <script>
-        
+        // Инициализация элементов
         const mainBody = document.getElementById('main-body');
         const catIntroScreen = document.getElementById('cat-intro-screen'); 
         const sadCatVisual = document.getElementById('sad-cat-visual'); 
@@ -487,6 +529,11 @@
         const hiddenMessageContainer = document.getElementById('hidden-message-container');
         const memoryAlbum = document.getElementById('memory-album');
 
+        // Элементы регулятора громкости
+        const volumeControl = document.getElementById('volume-control');
+        const volumeLevel = document.getElementById('volume-level');
+        const volumePercent = document.getElementById('volume-percent');
+        
         let clickState = 0;
         const clickMessages = [
             "Нажми где угодно", "Эй ты", "Я хочу спросить о кое чём.",
@@ -496,32 +543,75 @@
         
         let animationTimeouts = [];
         
-        // --- Настройка Аудио (пути остались те же - папка Songs) ---
+        // --- Настройка Аудио ---
         const audioHappyBr = new Audio('Songs/happy_br.mp3');
         audioHappyBr.loop = true;
-        audioHappyBr.volume = 0.4; // Немного тише для фона
+        // Начальная громкость для фоновой музыки (пользователь будет ее регулировать)
+        audioHappyBr.volume = 0.4; 
 
         const audio16Sg = new Audio('Songs/16_sg.mp3');
+        audio16Sg.volume = 1.0; // Громко
+        
         const audio42Sg = new Audio('Songs/42_sg.mp3');
-
+        audio42Sg.volume = 0.2; // Тихо, как просили
+        
         let isBackgroundMusicPlaying = false;
 
+        // Функция запуска фоновой музыки и отображения регулятора
         function playBackgroundMusic() {
             if (!isBackgroundMusicPlaying) {
                 audioHappyBr.play().then(() => {
                     isBackgroundMusicPlaying = true;
+                    // Показываем регулятор громкости
+                    volumeControl.style.opacity = '1';
+                    volumeControl.style.pointerEvents = 'auto';
                 }).catch(e => console.log("Не удалось запустить фоновую музыку (подождите взаимодействия пользователя):", e));
             }
         }
         
-        function handleCardClick() {
-            const link = this.dataset.link;
-            // Здесь можно открыть локальное изображение, если они были загружены в отдельном окне.
-            // Для локальных файлов на GitHub Pages лучше не использовать data-link, а просто позволить им быть частью страницы.
-            // Для совместимости оставим обработку, но без внешних ссылок (по умолчанию data-link будет пустым)
+        // Функция обновления регулятора громкости
+        function updateVolumeIndicator() {
+            const vol = audioHappyBr.volume;
+            const percent = Math.round(vol * 100);
+            volumeLevel.style.width = `${percent}%`;
+            volumePercent.textContent = `${percent}%`;
+        }
+
+        // Обработчик изменения громкости
+        function changeVolume(delta) {
+            let newVolume = audioHappyBr.volume + delta;
+            newVolume = Math.max(0, Math.min(1.0, newVolume)); // Ограничиваем от 0 до 1
+            audioHappyBr.volume = newVolume;
+            updateVolumeIndicator();
+        }
+
+        // --- Управление Громкостью на Клавишах ---
+        document.addEventListener('keydown', (e) => {
+            // Управление громкостью только если музыка должна быть включена (т.е. на главной странице)
+            if (isBackgroundMusicPlaying && mainGreetingPage.classList.contains('opacity-100')) {
+                const step = 0.05; // Шаг изменения громкости (5%)
+                if (e.key === 'ArrowUp') {
+                    changeVolume(step);
+                    e.preventDefault(); // Предотвратить прокрутку страницы
+                } else if (e.key === 'ArrowDown') {
+                    changeVolume(-step);
+                    e.preventDefault(); // Предотвратить прокрутку страницы
+                }
+            }
             
-            // window.open(this.querySelector('.album-image').src, '_blank'); 
-            console.log("Клик по фото в альбоме:", this.querySelector('.album-image').src);
+            // ESC для пропуска анимации
+            if (e.key === 'Escape' && !mainGreetingPage.classList.contains('opacity-100')) {
+                skipToFinalPage();
+            }
+        });
+
+        // --- Логика Анимации и Переходов ---
+
+        function handleCardClick() {
+            const src = this.querySelector('.album-image').src;
+            // Для локальных файлов на GitHub Pages, открывать в новой вкладке можно так:
+            window.open(src, '_blank'); 
+            console.log("Клик по фото в альбоме:", src);
         }
 
         function setupPhotoLinkListeners() {
@@ -554,16 +644,11 @@
 
             flame1.classList.remove('lit', 'blow-out');
             flame6.classList.remove('lit', 'blow-out');
-
+            
+            // Музыка запускается при переходе на главную страницу (для skip)
             playBackgroundMusic(); 
             console.log("Animation skipped by user (ESC key).");
         }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !mainGreetingPage.classList.contains('opacity-100')) {
-                skipToFinalPage();
-            }
-        });
 
         const colors = ['52, 211, 153', '6, 182, 212', '253, 224, 71', '239, 68, 68'];
         function createConfetti() {
@@ -610,7 +695,7 @@
         function startCatAnimation() {
             if (mainGreetingPage.classList.contains('opacity-100')) return; 
             
-            playBackgroundMusic(); 
+            // Музыка здесь НЕ запускается
 
             makeCatHappyBtn.disabled = true;
             const catTransitionDuration = 2000; 
@@ -706,6 +791,7 @@
 
             catImageContainer.style.transform = 'scale(1.5)';
             
+            // Воспроизведение звука с разной громкостью
             if (is16) {
                 audio16Sg.play().catch(e => console.error("Не удалось воспроизвести 16_sg:", e));
                 ageFeedbackText.textContent = "Ого так много! Тогда...";
@@ -780,6 +866,10 @@
                     mainBody.classList.remove('fixed-body'); 
                     mainGreetingPage.classList.remove('opacity-0', 'pointer-events-none');
                     mainGreetingPage.classList.add('opacity-100', 'pointer-events-auto');
+                    
+                    // --- ГЛАВНОЕ ИЗМЕНЕНИЕ: ЗАПУСК МУЗЫКИ ЗДЕСЬ ---
+                    playBackgroundMusic(); 
+                    
                 }, 1000)); 
 
             }, 12000)); 
@@ -822,6 +912,7 @@
             }
             setupPhotoLinkListeners();
             makeCatHappyBtn.disabled = false;
+            updateVolumeIndicator(); // Устанавливаем начальное состояние индикатора
         });
     </script>
 
